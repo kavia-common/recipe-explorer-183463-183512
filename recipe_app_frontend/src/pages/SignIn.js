@@ -1,12 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './signin.common.css';
+import { useAuth } from '../context/AuthContext';
+import { navigate } from '../RouterApp';
 
 // PUBLIC_INTERFACE
 export default function SignIn() {
-  /** Pixel-perfect Sign In screen (375x812) rendered in a centered container, preserving absolute positioning and styles. */
+  /** Pixel-perfect Sign In screen with React handlers; calls AuthContext.signIn on submit and navigates to /home. */
+  const { signIn } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
   // Load stylesheets for pixel-perfect screen without altering measurements
   useEffect(() => {
-    // Attach assets/common.css and assets/sign-in-11-235.css for pixel-perfect styles
     const links = [];
     const addLink = (href) => {
       const l = document.createElement('link');
@@ -18,20 +25,24 @@ export default function SignIn() {
     addLink('/assets/common.css');
     addLink('/assets/sign-in-11-235.css');
 
-    // Initialize button handler similar to assets/sign-in-11-235.js
-    const btn = document.getElementById('primarySignIn');
-    const handler = () => {
-      // Placeholder feedback effect
-      btn.classList.add('clicked');
-      setTimeout(() => btn.classList.remove('clicked'), 150);
-    };
-    if (btn) btn.addEventListener('click', handler);
-
     return () => {
-      links.forEach((l) => document.head.removeChild(l));
-      if (btn) btn.removeEventListener('click', handler);
+      links.forEach((l) => document.head.contains(l) && document.head.removeChild(l));
     };
   }, []);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSubmitting(true);
+    try {
+      await signIn({ email: email.trim(), password });
+      navigate('/home');
+    } catch (err) {
+      setError(err?.message || 'Failed to sign in');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div
@@ -40,10 +51,9 @@ export default function SignIn() {
       aria-label="Sign In Preview Root"
       style={{ '--font-family': "Poppins, 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" }}
     >
-      <div className="screen sign-in-11-235" role="application" aria-label="Sign In Screen">
+      <form className="screen sign-in-11-235" role="form" aria-label="Sign In Screen" onSubmit={onSubmit}>
         {/* Status Bar */}
         <div className="status-bar" aria-hidden="true">
-          {/* Using available png assets in /assets/figmaimages to ensure environment-safe paths */}
           <img className="sb-time" src="/assets/figmaimages/figma_image_100_2329.png" alt="" />
           <img className="sb-cell" src="/assets/figmaimages/figma_image_100_2357.png" alt="" />
           <img className="sb-wifi" src="/assets/figmaimages/figma_image_100_2375.png" alt="" />
@@ -56,18 +66,55 @@ export default function SignIn() {
 
         {/* Email Field */}
         <label className="input-label email-label" htmlFor="email">Email</label>
-        <input id="email" className="input email-input" type="email" placeholder="Enter your email" aria-label="Email" />
+        <input
+          id="email"
+          className="input email-input"
+          type="email"
+          placeholder="Enter your email"
+          aria-label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          autoComplete="username"
+        />
 
         {/* Password Field */}
         <label className="input-label password-label" htmlFor="password">Password</label>
-        <input id="password" className="input password-input" type="password" placeholder="Enter your password" aria-label="Password" />
+        <input
+          id="password"
+          className="input password-input"
+          type="password"
+          placeholder="Enter your password"
+          aria-label="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          autoComplete="current-password"
+        />
 
         {/* Forgot Password */}
         <button className="link forgot-password" type="button">Forgot Password?</button>
 
+        {/* Error message */}
+        {error && (
+          <div
+            role="alert"
+            style={{
+              position: 'absolute',
+              left: 24,
+              right: 24,
+              top: 364,
+              color: '#EF4444',
+              fontSize: 12
+            }}
+          >
+            {error}
+          </div>
+        )}
+
         {/* Primary Sign In Button */}
-        <button id="primarySignIn" className="btn-primary" type="button" aria-label="Sign In">
-          <span className="btn-label">Sign In</span>
+        <button id="primarySignIn" className="btn-primary" type="submit" aria-label="Sign In" disabled={submitting}>
+          <span className="btn-label">{submitting ? 'Signing In...' : 'Sign In'}</span>
           <img className="btn-icon" src="/assets/figmaimages/figma_image_103_4043.png" alt="" />
         </button>
 
@@ -97,7 +144,7 @@ export default function SignIn() {
         <div className="home-indicator">
           <img src="/assets/figmaimages/figma_image_18_217.png" alt="" />
         </div>
-      </div>
+      </form>
     </div>
   );
 }

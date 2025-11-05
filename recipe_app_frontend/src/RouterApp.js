@@ -8,6 +8,7 @@ import FavoritesPanel from './components/FavoritesPanel';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { useRecipes } from './hooks/useRecipes';
 import SignIn from './pages/SignIn';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 /**
  * Simple hash router helpers
@@ -127,19 +128,23 @@ function HomeApp() {
   );
 }
 
-// PUBLIC_INTERFACE
-export default function RouterApp() {
-  /**
-   * Hash-based router with routes:
-   * - '/signin' and '/' render the Sign In preview
-   * - '/home' renders the recipe explorer
-   * - '/recipe/:id' opens detail panel on Home
-   * - '/favorites' opens favorites drawer on Home
-   */
+function GuardedRoutes() {
   const route = useHashRoute();
+  const { user } = useAuth();
 
-  if (route.name === 'signin') {
+  // Unauthenticated users can only see signin route
+  if (!user) {
+    if (route.name !== 'signin') {
+      navigate('/signin', { replace: true });
+      return null;
+    }
     return <SignIn />;
+  }
+
+  // Authenticated users shouldn't stay on signin
+  if (route.name === 'signin') {
+    navigate('/home', { replace: true });
+    return null;
   }
 
   if (route.name === 'home' || route.name === 'favorites' || route.name === 'recipe') {
@@ -150,7 +155,21 @@ export default function RouterApp() {
     );
   }
 
-  // Fallback: redirect unknown to Sign In
+  // Fallback
   navigate('/signin', { replace: true });
   return null;
+}
+
+// PUBLIC_INTERFACE
+export default function RouterApp() {
+  /**
+   * Hash-based router with authentication guard.
+   * - '/signin' and '/' render the Sign In when not authenticated
+   * - Authenticated users can access '/home', '/recipe/:id', '/favorites'
+   */
+  return (
+    <AuthProvider>
+      <GuardedRoutes />
+    </AuthProvider>
+  );
 }

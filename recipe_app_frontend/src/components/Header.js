@@ -1,9 +1,12 @@
 import React from 'react';
 import { navigate } from '../RouterApp';
+import { useAuth } from '../context/AuthContext';
 
 // PUBLIC_INTERFACE
 export default function Header({ onOpenFavorites, onNavigateHome, children }) {
   /** App header with brand and action buttons. */
+  const { signOut, user } = useAuth();
+
   const goHome = () => {
     if (onNavigateHome) onNavigateHome();
     else navigate('/home');
@@ -12,6 +15,11 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
   const openFav = () => {
     if (onOpenFavorites) onOpenFavorites();
     else navigate('/favorites');
+  };
+
+  const onSignOut = () => {
+    signOut();
+    navigate('/signin');
   };
 
   return (
@@ -31,6 +39,9 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
         <div className="header-actions">
           <button className="btn secondary" onClick={openFav} aria-label="Open favorites">
             ★ Favorites
+          </button>
+          <button className="icon-btn" onClick={onSignOut} aria-label="Sign out" title="Sign out">
+            🚪
           </button>
           <a
             className="icon-btn"
