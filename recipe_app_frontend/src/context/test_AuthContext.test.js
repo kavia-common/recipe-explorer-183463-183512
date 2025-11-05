@@ -55,26 +55,19 @@ describe('AuthContext', () => {
       </AuthProvider>
     );
 
-    // Click the button that triggers a rejecting signIn call
-    fireEvent.click(screen.getByText('bad'));
+    // Invoke the action that triggers a rejecting signIn call
+    const badButton = screen.getByText('bad');
+    const clickPromise = Promise.resolve().then(() => fireEvent.click(badButton));
 
-    // Advance fake timers to resolve the internal timeout used by fakeAuthenticate
+    // Advance timers to allow fakeAuthenticate to settle (~300ms)
     await waitFor(() => {
       jest.advanceTimersByTime(350);
     });
 
-    // Explicitly await the rejection to avoid unhandled rejection warnings
-    await expect(
-      (async () => {
-        // Trigger again to capture the rejection path deterministically
-        // Using try/catch to swallow the expected error
-        try {
-          const { signIn } = require('./AuthContext');
-        } catch {}
-      })()
-    ).resolves.toBeUndefined();
+    // Await the click dispatch to ensure promises scheduled by React are flushed
+    await clickPromise;
 
-    // user should still be none
+    // No unhandled rejection should occur; user remains none
     expect(screen.getByTestId('user')).toHaveTextContent('none');
   });
 

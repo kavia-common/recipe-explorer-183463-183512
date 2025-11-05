@@ -71,7 +71,6 @@ export default function SignIn() {
           className="input email-input"
           type="email"
           placeholder="Enter your email"
-          aria-label="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -85,7 +84,6 @@ export default function SignIn() {
           className="input password-input"
           type="password"
           placeholder="Enter your password"
-          aria-label="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
