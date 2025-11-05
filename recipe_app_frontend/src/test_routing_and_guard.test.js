@@ -19,12 +19,16 @@ jest.spyOn(apiClient, 'getRecipeDetail').mockImplementation(async (id) => ({
   instructions: ['step 1'],
 }));
 
+import { within } from '@testing-library/react';
+
 // Helper to sign in via UI since AuthProvider is encapsulated in RouterApp
 async function performSignIn() {
   // On unauthenticated load, RouterApp directs to SignIn
-  const email = await screen.findByLabelText(/Email/i);
-  const password = screen.getByLabelText(/Password/i);
-  const button = screen.getByRole('button', { name: /Sign In/i });
+  const form = await screen.findByRole('form', { name: /Sign In Screen/i });
+  const utils = within(form);
+  const email = utils.getByLabelText(/Email/i);
+  const password = utils.getByLabelText(/Password/i);
+  const button = utils.getByRole('button', { name: /Sign In/i });
 
   fireEvent.change(email, { target: { value: 'user@example.com' } });
   fireEvent.change(password, { target: { value: 'secret' } });

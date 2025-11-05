@@ -3,11 +3,11 @@ import { renderHook, act } from '@testing-library/react';
 import { useRecipeDetail } from '../useRecipeDetail';
 
 // Mock client
-jest.mock('../../api/client', () => ({
+jest.mock('../api/client.js', () => ({
   getRecipeDetail: jest.fn(),
 }));
 
-import { getRecipeDetail } from '../../api/client';
+import { getRecipeDetail } from '../api/client.js';
 
 describe('useRecipeDetail', () => {
   beforeEach(() => {
