@@ -36,9 +36,9 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
         </button>
         {children}
         <div className="header-actions">
-          <button className="btn btn-secondary" onClick={openFav} aria-label="Open favorites">
+          <a className="btn btn-secondary" href="#/favorites" onClick={(e) => { e.preventDefault(); openFav(); }} aria-label="Open favorites">
             ★ Favorites
-          </button>
+          </a>
           <button className="icon-btn" onClick={onSignOut} aria-label="Sign out" title="Sign out">
             🚪
           </button>

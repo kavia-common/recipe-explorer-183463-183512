@@ -8,6 +8,7 @@ import FavoritesPanel from './components/FavoritesPanel';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { useRecipes } from './hooks/useRecipes';
 import SignIn from './pages/SignIn';
+import FavoritesPage from './pages/Favorites';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 /**
@@ -106,12 +107,18 @@ function HomeApp() {
       </Header>
 
       <main className="content">
-        {loading && <div className="empty">Loading recipes...</div>}
-        {!loading && (
-          <RecipeGrid
-            recipes={recipes}
-            onOpen={(r) => actions.openDetail(r)}
-          />
+        {route.name === 'favorites' ? (
+          <FavoritesPage />
+        ) : (
+          <>
+            {loading && <div className="empty">Loading recipes...</div>}
+            {!loading && (
+              <RecipeGrid
+                recipes={recipes}
+                onOpen={(r) => actions.openDetail(r)}
+              />
+            )}
+          </>
         )}
       </main>
 
