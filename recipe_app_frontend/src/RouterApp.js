@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './theme.css';
+import React from 'react';
+import { useState } from 'react';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import RecipeGrid from './components/RecipeGrid';
@@ -7,10 +7,20 @@ import RecipeDetail from './components/RecipeDetail';
 import FavoritesPanel from './components/FavoritesPanel';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { useRecipes } from './hooks/useRecipes';
+import SignIn from './pages/SignIn';
 
-// PUBLIC_INTERFACE
+// Lightweight router without extra dependencies
+function useHashRoute() {
+  const [path, setPath] = useState(() => window.location.hash.replace(/^#/, '') || '/');
+  React.useEffect(() => {
+    const onHashChange = () => setPath(window.location.hash.replace(/^#/, '') || '/');
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+  return [path, (p) => { window.location.hash = p; }];
+}
+
 function HomeApp() {
-  /** Main Recipe Explorer page with search, grid, detail, and favorites. */
   const { query, setQuery, recipes, loading, search } = useRecipes('');
   const [selected, setSelected] = useState(null);
   const [openFav, setOpenFav] = useState(false);
@@ -48,10 +58,14 @@ function HomeApp() {
   );
 }
 
-/* Kept for backwards compatibility; RouterApp is the entry via index.js when using hash routes. */
 // PUBLIC_INTERFACE
-export default function App() {
-  /** App root wrapped with FavoritesProvider for state management. */
+export default function RouterApp() {
+  /** Minimal hash-based router with / and /signin routes without adding dependencies. */
+  const [route] = useHashRoute();
+
+  if (route === '/signin') {
+    return <SignIn />;
+  }
   return (
     <FavoritesProvider>
       <HomeApp />

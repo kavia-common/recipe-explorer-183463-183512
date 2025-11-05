@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'Poppins';
+  src: local('Poppins'), url('https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLDz8Z1xlEA.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display'), local('SFProDisplay-Regular');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Center the 375x812 container on the page without affecting global app styles */
+.signin-preview-root {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #f3f4f6;
+  padding: 16px;
+}
+
+/* Prevent global app theme.css from affecting the pixel screen; lock sizing context */
+.signin-preview-root * {
+  box-sizing: content-box; /* Ensure we don't override the asset css expectations */
+}
+
+/* Limit only to the preview root resetting margins for neat centering */
+.signin-preview-root body,
+.signin-preview-root .screen.sign-in-11-235 {
+  margin: 0;
+}
+
+/* No additional visual changes applied to preserve exact measurements */
