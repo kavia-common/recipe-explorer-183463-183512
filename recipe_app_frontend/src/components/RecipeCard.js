@@ -3,7 +3,7 @@ import { useFavorites } from '../context/FavoritesContext';
 import { navigate } from '../RouterApp';
 
 // PUBLIC_INTERFACE
-export default function RecipeCard({ recipe, onOpen }) {
+function RecipeCardBase({ recipe, onOpen }) {
   /** Card showing a recipe with image, title, time, and favorite action. */
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const fav = isFavorite(recipe.id);
@@ -85,3 +85,21 @@ export default function RecipeCard({ recipe, onOpen }) {
     </article>
   );
 }
+
+// PUBLIC_INTERFACE
+const RecipeCard = React.memo(RecipeCardBase, (prev, next) => {
+  // Shallow compare key fields to prevent re-render unless recipe identity/fields or onOpen ref change
+  const a = prev.recipe;
+  const b = next.recipe;
+  const sameRecipe =
+    a === b ||
+    (a?.id === b?.id &&
+      a?.title === b?.title &&
+      a?.image === b?.image &&
+      a?.readyInMinutes === b?.readyInMinutes &&
+      a?.servings === b?.servings);
+  const sameOnOpen = prev.onOpen === next.onOpen;
+  return sameRecipe && sameOnOpen;
+});
+
+export default RecipeCard;

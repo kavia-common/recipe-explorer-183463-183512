@@ -25,7 +25,8 @@ function HomeApp() {
           defaultValue={query}
           onSearch={(q) => {
             setQuery(q);
-            search(q);
+            // Submit invokes immediate search; typing is debounced inside SearchBar
+            search(q, { immediate: true });
           }}
         />
       </Header>
