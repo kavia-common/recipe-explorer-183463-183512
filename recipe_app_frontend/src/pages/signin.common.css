@@ -22,6 +22,14 @@
   padding: 16px;
   /* Isolation boundary to prevent global styles leaking in */
   isolation: isolate;
+
+  /* Ocean Professional token overrides inside preview only */
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --accent: #2563EB;
+  --border: #e5e7eb;
+  --input-bg: #ffffff;
+  --input-border: #e5e7eb;
 }
 
 /* Prevent global app theme.css from affecting the pixel screen; lock sizing context */

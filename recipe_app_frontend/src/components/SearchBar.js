@@ -18,8 +18,9 @@ export default function SearchBar({ onSearch, defaultValue = '' }) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         aria-label="Search recipes"
+        className="focus-ring"
       />
-      <button className="btn search-btn" type="submit">Search</button>
+      <button className="btn btn-primary search-btn" type="submit">Search</button>
     </form>
   );
 }

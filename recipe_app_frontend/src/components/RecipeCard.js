@@ -34,7 +34,7 @@ export default function RecipeCard({ recipe, onOpen }) {
         </div>
         <div className="card-actions">
           <button
-            className="btn"
+            className="btn btn-primary"
             onClick={(e) => { e.stopPropagation(); openDetail(); }}
           >
             View

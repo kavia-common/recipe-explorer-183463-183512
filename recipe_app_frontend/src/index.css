@@ -1,4 +1,4 @@
-/* Reset tweaks are in theme.css; keep minimal font settings here in case */
+/* Keep minimal resets; main theming handled in theme.css */
 html, body {
   margin: 0;
   padding: 0;

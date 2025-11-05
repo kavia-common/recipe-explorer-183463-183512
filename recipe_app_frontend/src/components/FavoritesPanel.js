@@ -45,7 +45,7 @@ export default function FavoritesPanel({ open, onClose, onOpenRecipe }) {
             </div>
             <div style={{ display: 'grid', alignItems: 'center', paddingRight: 8 }}>
               <div style={{ display: 'flex', gap: 6 }}>
-                <button className="btn" onClick={() => openRecipe(r)} style={{ padding: '8px 10px' }}>
+                <button className="btn btn-primary" onClick={() => openRecipe(r)} style={{ padding: '8px 10px' }}>
                   View
                 </button>
                 <button className="icon-btn danger" onClick={() => removeFavorite(r.id)} title="Remove">🗑</button>

@@ -34,7 +34,7 @@ export default function RecipeDetail({ id, onClose }) {
             <strong>{recipe?.title || 'Loading...'}</strong>
           </div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <button className="btn" onClick={toggleFav}>
+            <button className="btn btn-secondary" onClick={toggleFav}>
               {recipe && isFavorite(recipe.id) ? '★ In Favorites' : '☆ Add Favorite'}
             </button>
             <button className="icon-btn" onClick={onClose} aria-label="Close">✖</button>
