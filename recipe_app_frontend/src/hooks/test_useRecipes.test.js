@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderHook, act } from '@testing-library/react';
-import { useRecipes } from './useRecipes';
+import { useRecipes } from './useRecipes.js';
 
 // Mock api client
 jest.mock('../api/client.js', () => ({

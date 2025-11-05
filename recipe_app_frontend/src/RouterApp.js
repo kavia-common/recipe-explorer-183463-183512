@@ -1,15 +1,15 @@
 import React from 'react';
 import { useMemo, useState } from 'react';
-import Header from './components/Header';
-import SearchBar from './components/SearchBar';
-import RecipeGrid from './components/RecipeGrid';
-import RecipeDetail from './components/RecipeDetail';
-import FavoritesPanel from './components/FavoritesPanel';
-import { FavoritesProvider } from './context/FavoritesContext';
-import { useRecipes } from './hooks/useRecipes';
-import SignIn from './pages/SignIn';
-import FavoritesPage from './pages/Favorites';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import Header from './components/Header.js';
+import SearchBar from './components/SearchBar.js';
+import RecipeGrid from './components/RecipeGrid.js';
+import RecipeDetail from './components/RecipeDetail.js';
+import FavoritesPanel from './components/FavoritesPanel.js';
+import { FavoritesProvider } from './context/FavoritesContext.js';
+import { useRecipes } from './hooks/useRecipes.js';
+import SignIn from './pages/SignIn.js';
+import FavoritesPage from './pages/Favorites.js';
+import { AuthProvider, useAuth } from './context/AuthContext.js';
 
 /**
  * Simple hash router helpers

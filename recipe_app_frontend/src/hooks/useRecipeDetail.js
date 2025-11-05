@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getRecipeDetail } from '../api/client';
+import { getRecipeDetail } from '../api/client.js';
 
 // PUBLIC_INTERFACE
 export function useRecipeDetail(id) {

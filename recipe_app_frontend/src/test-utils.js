@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { FavoritesProvider } from './context/FavoritesContext';
-import { AuthProvider } from './context/AuthContext';
+import { FavoritesProvider } from './context/FavoritesContext.js';
+import { AuthProvider } from './context/AuthContext.js';
 
 // PUBLIC_INTERFACE
 export function renderWithProviders(ui, { withAuth = true, withFavorites = true } = {}) {

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './theme.css';
-import Header from './components/Header';
-import SearchBar from './components/SearchBar';
-import RecipeGrid from './components/RecipeGrid';
-import RecipeDetail from './components/RecipeDetail';
-import FavoritesPanel from './components/FavoritesPanel';
-import { FavoritesProvider } from './context/FavoritesContext';
-import { useRecipes } from './hooks/useRecipes';
+import Header from './components/Header.js';
+import SearchBar from './components/SearchBar.js';
+import RecipeGrid from './components/RecipeGrid.js';
+import RecipeDetail from './components/RecipeDetail.js';
+import FavoritesPanel from './components/FavoritesPanel.js';
+import { FavoritesProvider } from './context/FavoritesContext.js';
+import { useRecipes } from './hooks/useRecipes.js';
 
 // PUBLIC_INTERFACE
 function HomeApp() {

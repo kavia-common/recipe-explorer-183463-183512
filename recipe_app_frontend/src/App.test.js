@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import RouterApp from './RouterApp';
+import RouterApp from './RouterApp.js';
 
 test('renders brand text somewhere in the app after auth flow', async () => {
   render(<RouterApp />);

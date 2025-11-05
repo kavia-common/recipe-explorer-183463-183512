@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { FavoritesProvider, useFavorites } from './FavoritesContext';
-import { clearLocalStorage } from '../test-utils';
+import { FavoritesProvider, useFavorites } from './FavoritesContext.js';
+import { clearLocalStorage } from '../test-utils.js';
 
 function TestComp() {
   const { favorites, addFavorite, removeFavorite, clearFavorites, isFavorite } = useFavorites();

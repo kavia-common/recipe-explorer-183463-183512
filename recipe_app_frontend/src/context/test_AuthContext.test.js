@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { AuthProvider, useAuth } from './AuthContext';
-import { clearLocalStorage } from '../test-utils';
+import { AuthProvider, useAuth } from './AuthContext.js';
+import { clearLocalStorage } from '../test-utils.js';
 
 function AuthConsumer() {
   const { user, signIn, signOut } = useAuth();

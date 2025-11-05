@@ -1,10 +1,14 @@
 import pluginJs from "@eslint/js";
 import pluginReact from "eslint-plugin-react";
 
+/**
+ * ESLint flat-config for modern ESLint with CRA 5 codebase.
+ * Kept lightweight to avoid conflicting with react-scripts' internal lint rules.
+ */
 export default [
   { files: ["**/*.{js,mjs,cjs,jsx}"] },
-  { 
-    languageOptions: { 
+  {
+    languageOptions: {
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
@@ -18,9 +22,7 @@ export default [
       }
     },
     rules: {
-
-     'no-unused-vars': ['error', { varsIgnorePattern: 'React|App' }]
-
+      "no-unused-vars": ["error", { varsIgnorePattern: "React|App" }]
     }
   },
   pluginJs.configs.recommended,
@@ -30,6 +32,9 @@ export default [
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
       "react/jsx-uses-vars": "error"
+    },
+    settings: {
+      react: { version: "detect" }
     }
   }
-]
+];

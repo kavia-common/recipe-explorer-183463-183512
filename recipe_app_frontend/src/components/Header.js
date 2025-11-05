@@ -1,6 +1,6 @@
 import React from 'react';
-import { navigate } from '../RouterApp';
-import { useAuth } from '../context/AuthContext';
+import { navigate } from '../RouterApp.js';
+import { useAuth } from '../context/AuthContext.js';
 
 // PUBLIC_INTERFACE
 export default function Header({ onOpenFavorites, onNavigateHome, children }) {

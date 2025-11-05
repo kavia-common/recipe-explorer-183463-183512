@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { debounce, DEFAULT_DEBOUNCE_DELAY } from '../utils/debounce';
+import { debounce, DEFAULT_DEBOUNCE_DELAY } from '../utils/debounce.js';
 
 /**
  * PUBLIC_INTERFACE

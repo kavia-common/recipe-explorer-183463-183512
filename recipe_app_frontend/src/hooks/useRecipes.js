@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { searchRecipes } from '../api/client';
-import { debounce, DEFAULT_DEBOUNCE_DELAY } from '../utils/debounce';
+import { searchRecipes } from '../api/client.js';
+import { debounce, DEFAULT_DEBOUNCE_DELAY } from '../utils/debounce.js';
 
 // PUBLIC_INTERFACE
 export function useRecipes(initialQuery = '', { debounceMs = DEFAULT_DEBOUNCE_DELAY } = {}) {

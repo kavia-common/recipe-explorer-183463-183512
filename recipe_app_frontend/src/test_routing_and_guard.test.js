@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import RouterApp, { navigate } from './RouterApp';
-import * as apiClient from './api/client';
-import { setHash, clearLocalStorage } from './test-utils';
+import RouterApp, { navigate } from './RouterApp.js';
+import * as apiClient from './api/client.js';
+import { setHash, clearLocalStorage } from './test-utils.js';
 
 // Mock API to make UI deterministic
 jest.spyOn(apiClient, 'searchRecipes').mockResolvedValue([
