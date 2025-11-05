@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFavorites } from '../context/FavoritesContext';
+import { useFavorites } from '../context/FavoritesContext.js';
 import { navigate } from '../RouterApp.js';
 
 // PUBLIC_INTERFACE

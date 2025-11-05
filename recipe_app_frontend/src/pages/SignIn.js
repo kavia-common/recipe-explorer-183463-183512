@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './signin.common.css';
-import { useAuth } from '../context/AuthContext';
-import { navigate } from '../RouterApp';
+import { useAuth } from '../context/AuthContext.js';
+import { navigate } from '../RouterApp.js';
 
 // PUBLIC_INTERFACE
 export default function SignIn() {

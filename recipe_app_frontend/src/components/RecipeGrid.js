@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import RecipeCard from './RecipeCard';
+import RecipeCard from './RecipeCard.js';
 
 // PUBLIC_INTERFACE
 function RecipeGridBase({ recipes, onOpen }) {

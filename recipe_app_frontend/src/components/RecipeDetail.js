@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { useRecipeDetail } from '../hooks/useRecipeDetail';
-import { useFavorites } from '../context/FavoritesContext';
+import { useRecipeDetail } from '../hooks/useRecipeDetail.js';
+import { useFavorites } from '../context/FavoritesContext.js';
 
 // PUBLIC_INTERFACE
 export default function RecipeDetail({ id, onClose }) {
