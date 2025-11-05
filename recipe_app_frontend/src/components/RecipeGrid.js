@@ -15,7 +15,7 @@ export default function RecipeGrid({ recipes, onOpen }) {
     <div className="grid">
       {recipes.map((r) => (
         <div key={r.id} className="col-4 lg-col-4 sm-col-4">
-          <RecipeCard recipe={r} onOpen={() => onOpen?.(r)} />
+          <RecipeCard recipe={r} onOpen={onOpen ? () => onOpen(r) : undefined} />
         </div>
       ))}
     </div>

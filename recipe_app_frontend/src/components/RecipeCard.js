@@ -1,11 +1,17 @@
 import React from 'react';
 import { useFavorites } from '../context/FavoritesContext';
+import { navigate } from '../RouterApp';
 
 // PUBLIC_INTERFACE
 export default function RecipeCard({ recipe, onOpen }) {
   /** Card showing a recipe with image, title, time, and favorite action. */
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const fav = isFavorite(recipe.id);
+
+  const openDetail = () => {
+    if (onOpen) onOpen(recipe);
+    else navigate(`/recipe/${encodeURIComponent(recipe.id)}`);
+  };
 
   const toggleFav = (e) => {
     e.stopPropagation();
@@ -16,7 +22,7 @@ export default function RecipeCard({ recipe, onOpen }) {
   const img = recipe.image || 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop';
 
   return (
-    <article className="card" onClick={() => onOpen?.(recipe)} role="button" tabIndex={0}>
+    <article className="card" onClick={openDetail} role="button" tabIndex={0}>
       <div className="card-image">
         <img src={img} alt={recipe.title} />
       </div>
@@ -27,7 +33,12 @@ export default function RecipeCard({ recipe, onOpen }) {
           <span className="badge">🍽 {recipe.servings ?? 2}</span>
         </div>
         <div className="card-actions">
-          <button className="btn" onClick={(e) => { e.stopPropagation(); onOpen?.(recipe); }}>View</button>
+          <button
+            className="btn"
+            onClick={(e) => { e.stopPropagation(); openDetail(); }}
+          >
+            View
+          </button>
           <button
             className={`icon-btn ${fav ? 'danger' : ''}`}
             aria-label={fav ? 'Remove from favorites' : 'Add to favorites'}

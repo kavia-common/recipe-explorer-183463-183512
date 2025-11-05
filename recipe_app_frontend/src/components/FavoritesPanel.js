@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFavorites } from '../context/FavoritesContext';
+import { navigate } from '../RouterApp';
 
 // PUBLIC_INTERFACE
 export default function FavoritesPanel({ open, onClose, onOpenRecipe }) {
@@ -7,6 +8,11 @@ export default function FavoritesPanel({ open, onClose, onOpenRecipe }) {
   const { favorites, removeFavorite, clearFavorites } = useFavorites();
 
   if (!open) return null;
+
+  const openRecipe = (r) => {
+    if (onOpenRecipe) onOpenRecipe(r);
+    else navigate(`/recipe/${encodeURIComponent(r.id)}`);
+  };
 
   return (
     <aside className="fav-drawer" aria-label="Favorites panel">
@@ -39,7 +45,7 @@ export default function FavoritesPanel({ open, onClose, onOpenRecipe }) {
             </div>
             <div style={{ display: 'grid', alignItems: 'center', paddingRight: 8 }}>
               <div style={{ display: 'flex', gap: 6 }}>
-                <button className="btn" onClick={() => onOpenRecipe?.(r)} style={{ padding: '8px 10px' }}>
+                <button className="btn" onClick={() => openRecipe(r)} style={{ padding: '8px 10px' }}>
                   View
                 </button>
                 <button className="icon-btn danger" onClick={() => removeFavorite(r.id)} title="Remove">🗑</button>

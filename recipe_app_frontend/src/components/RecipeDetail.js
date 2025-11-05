@@ -4,7 +4,10 @@ import { useFavorites } from '../context/FavoritesContext';
 
 // PUBLIC_INTERFACE
 export default function RecipeDetail({ id, onClose }) {
-  /** Modal-like detail view showing ingredients and instructions. */
+  /**
+   * Modal-like detail view showing ingredients and instructions.
+   * This component is route-driven: it renders when route is /recipe/:id and closes via navigation back to /home.
+   */
   const { recipe, loading } = useRecipeDetail(id);
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
 
