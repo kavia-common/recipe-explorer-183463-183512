@@ -32,7 +32,7 @@ export default function RecipeCard({ recipe, onOpen }) {
 
   return (
     <article
-      className="card"
+      className="card focus-ring"
       onClick={openDetail}
       onKeyDown={onKeyActivate}
       role="listitem"
@@ -54,7 +54,8 @@ export default function RecipeCard({ recipe, onOpen }) {
         </div>
         <div className="card-actions">
           <button
-            className="btn btn-primary"
+            type="button"
+            className="btn btn-primary focus-ring"
             onClick={(e) => {
               e.stopPropagation();
               openDetail();
@@ -64,7 +65,8 @@ export default function RecipeCard({ recipe, onOpen }) {
             View
           </button>
           <button
-            className={`icon-btn ${fav ? 'danger' : ''}`}
+            type="button"
+            className={`icon-btn focus-ring ${fav ? 'danger' : ''}`}
             aria-label={fav ? 'Remove from favorites' : 'Add to favorites'}
             aria-pressed={fav}
             title={fav ? 'Remove from favorites' : 'Add to favorites'}

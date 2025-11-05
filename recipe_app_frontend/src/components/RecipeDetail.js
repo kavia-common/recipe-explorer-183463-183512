@@ -40,16 +40,24 @@ export default function RecipeDetail({ id, onClose }) {
   if (!id) return null;
 
   return (
-    <div className="detail-overlay" role="dialog" aria-modal="true" aria-label="Recipe details">
+    <div
+      className="detail-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="recipe-detail-title"
+      aria-describedby={loading ? 'recipe-detail-loading' : undefined}
+      aria-label="Recipe details"
+    >
       <div className="detail-panel" ref={panelRef}>
         <div className="detail-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span className="badge">Details</span>
-            <strong>{recipe?.title || 'Loading...'}</strong>
+            <span className="badge" aria-hidden="true">Details</span>
+            <strong id="recipe-detail-title">{recipe?.title || 'Loading...'}</strong>
           </div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <button
-              className="btn btn-secondary"
+              type="button"
+              className="btn btn-secondary focus-ring"
               onClick={toggleFav}
               aria-pressed={recipe ? !!isFavorite(recipe.id) : false}
               aria-label={recipe && isFavorite(recipe.id) ? 'Remove from favorites' : 'Add to favorites'}
@@ -57,8 +65,9 @@ export default function RecipeDetail({ id, onClose }) {
               {recipe && isFavorite(recipe.id) ? '★ In Favorites' : '☆ Add Favorite'}
             </button>
             <button
+              type="button"
               id="detailCloseBtn"
-              className="icon-btn"
+              className="icon-btn focus-ring"
               onClick={onClose}
               aria-label="Close details"
               title="Close details"
@@ -84,7 +93,7 @@ export default function RecipeDetail({ id, onClose }) {
             </div>
           )}
           {loading && (
-            <div className="empty" role="status" aria-live="polite" aria-busy="true">
+            <div id="recipe-detail-loading" className="empty" role="status" aria-live="polite" aria-busy="true">
               <span className="spinner" aria-hidden="true">⏳</span> Loading recipe...
             </div>
           )}

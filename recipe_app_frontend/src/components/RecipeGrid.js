@@ -12,7 +12,7 @@ export default function RecipeGrid({ recipes, onOpen }) {
     );
   }
   return (
-    <div className="grid" role="list" aria-label="Recipe results">
+    <div id="recipe-results" className="grid" role="list" aria-label="Recipe results">
       {recipes.map((r) => (
         <div key={r.id} className="col-4 lg-col-4 sm-col-4">
           <RecipeCard recipe={r} onOpen={onOpen ? () => onOpen(r) : undefined} />

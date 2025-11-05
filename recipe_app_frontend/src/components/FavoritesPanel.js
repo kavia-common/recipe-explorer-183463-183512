@@ -22,7 +22,8 @@ export default function FavoritesPanel({ open, onClose, onOpenRecipe }) {
           <div>
             {!!favorites.length && (
               <button
-                className="icon-btn danger"
+                type="button"
+                className="icon-btn danger focus-ring"
                 onClick={clearFavorites}
                 title="Clear all favorites"
                 aria-label="Clear all favorites"
@@ -31,7 +32,8 @@ export default function FavoritesPanel({ open, onClose, onOpenRecipe }) {
               </button>
             )}
             <button
-              className="icon-btn"
+              type="button"
+              className="icon-btn focus-ring"
               onClick={onClose}
               title="Close favorites panel"
               aria-label="Close favorites panel"

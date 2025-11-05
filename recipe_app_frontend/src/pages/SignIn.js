@@ -93,7 +93,7 @@ export default function SignIn() {
         />
 
         {/* Forgot Password */}
-        <button className="link forgot-password" type="button" aria-label="Forgot password">Forgot Password?</button>
+        <button className="link forgot-password focus-ring" type="button" aria-label="Forgot password">Forgot Password?</button>
 
         {/* Error message */}
         {error && (
@@ -113,7 +113,7 @@ export default function SignIn() {
         )}
 
         {/* Primary Sign In Button */}
-        <button id="primarySignIn" className="btn-primary" type="submit" aria-label="Sign In" disabled={submitting}>
+        <button id="primarySignIn" className="btn-primary focus-ring" type="submit" aria-label="Sign In" disabled={submitting}>
           <span className="btn-label">{submitting ? 'Signing In...' : 'Sign In'}</span>
           <img className="btn-icon" src="/assets/figmaimages/figma_image_103_4043.png" alt="" />
         </button>
@@ -122,11 +122,11 @@ export default function SignIn() {
         <div className="divider-text" aria-hidden="true">Or continue with</div>
 
         {/* Social Buttons */}
-        <button className="btn-social btn-google" type="button" aria-label="Continue with Google">
+        <button className="btn-social btn-google focus-ring" type="button" aria-label="Continue with Google">
           <img className="social-icon" src="/assets/figmaimages/figma_image_103_4061.png" alt="" />
           <span className="social-label">Google</span>
         </button>
-        <button className="btn-social btn-apple" type="button" aria-label="Continue with Apple">
+        <button className="btn-social btn-apple focus-ring" type="button" aria-label="Continue with Apple">
           <img className="social-icon" src="/assets/figmaimages/figma_image_104_1862.png" alt="" />
           <span className="social-label">Apple</span>
         </button>
@@ -134,7 +134,7 @@ export default function SignIn() {
         {/* Footer - Sign Up Link */}
         <div className="signup-row">
           <span className="signup-text">Don’t have an account?</span>
-          <a href="#" className="signup-link" aria-label="Sign up for an account">Sign Up</a>
+          <a href="#" className="signup-link focus-ring" aria-label="Sign up for an account">Sign Up</a>
         </div>
 
         {/* Decorative shape */}

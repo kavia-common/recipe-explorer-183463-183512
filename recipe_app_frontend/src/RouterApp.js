@@ -106,13 +106,13 @@ function HomeApp() {
         />
       </Header>
 
-      <main className="content">
+      <main className="content" role="main" aria-live="polite">
         {route.name === 'favorites' ? (
           <FavoritesPage />
         ) : (
           <>
             {loading && (
-              <div className="empty" role="status" aria-live="polite" aria-busy="true">
+              <div id="recipes-loading" className="empty" role="status" aria-busy="true">
                 <span className="spinner" aria-hidden="true">⏳</span> Loading recipes...
               </div>
             )}

@@ -17,7 +17,11 @@ export default function SearchBar({ onSearch, defaultValue = '' }) {
       role="search"
       aria-label="Recipe search"
     >
+      <label htmlFor="global-search" className="sr-only" aria-hidden="true">
+        Search recipes
+      </label>
       <input
+        id="global-search"
         type="search"
         placeholder="Search recipes (e.g., pasta, salad, chicken)..."
         value={value}
@@ -25,9 +29,10 @@ export default function SearchBar({ onSearch, defaultValue = '' }) {
         aria-label="Search recipes"
         className="focus-ring"
         role="searchbox"
+        aria-controls="recipe-results"
       />
       <button
-        className="btn btn-primary search-btn"
+        className="btn btn-primary search-btn focus-ring"
         type="submit"
         aria-label="Run recipe search"
       >

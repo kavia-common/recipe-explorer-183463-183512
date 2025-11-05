@@ -35,7 +35,7 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
           <div className="brand-text">Recipe Explorer</div>
         </button>
         {children}
-        <div className="header-actions">
+        <div className="header-actions" role="group" aria-label="Header actions">
           <a
             className="btn btn-secondary focus-ring"
             href="#/favorites"
@@ -46,6 +46,7 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
             ★ Favorites
           </a>
           <button
+            type="button"
             className="icon-btn focus-ring"
             onClick={onSignOut}
             aria-label="Sign out"
@@ -60,6 +61,7 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
             rel="noreferrer"
             aria-label="Learn React"
             title="Learn React"
+            role="button"
           >
             ℹ️
           </a>
