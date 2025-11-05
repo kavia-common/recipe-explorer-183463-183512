@@ -93,7 +93,7 @@ export default function SignIn() {
         />
 
         {/* Forgot Password */}
-        <button className="link forgot-password" type="button">Forgot Password?</button>
+        <button className="link forgot-password" type="button" aria-label="Forgot password">Forgot Password?</button>
 
         {/* Error message */}
         {error && (
@@ -119,7 +119,7 @@ export default function SignIn() {
         </button>
 
         {/* Divider */}
-        <div className="divider-text">Or continue with</div>
+        <div className="divider-text" aria-hidden="true">Or continue with</div>
 
         {/* Social Buttons */}
         <button className="btn-social btn-google" type="button" aria-label="Continue with Google">
@@ -134,14 +134,14 @@ export default function SignIn() {
         {/* Footer - Sign Up Link */}
         <div className="signup-row">
           <span className="signup-text">Don’t have an account?</span>
-          <a href="#" className="signup-link">Sign Up</a>
+          <a href="#" className="signup-link" aria-label="Sign up for an account">Sign Up</a>
         </div>
 
         {/* Decorative shape */}
         <img className="decorative-shape" src="/assets/figmaimages/figma_image_30_811.png" alt="" />
 
         {/* Home Indicator */}
-        <div className="home-indicator">
+        <div className="home-indicator" aria-hidden="true">
           <img src="/assets/figmaimages/figma_image_18_217.png" alt="" />
         </div>
       </form>

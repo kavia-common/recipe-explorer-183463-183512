@@ -36,14 +36,25 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
         </button>
         {children}
         <div className="header-actions">
-          <a className="btn btn-secondary" href="#/favorites" onClick={(e) => { e.preventDefault(); openFav(); }} aria-label="Open favorites">
+          <a
+            className="btn btn-secondary focus-ring"
+            href="#/favorites"
+            onClick={(e) => { e.preventDefault(); openFav(); }}
+            aria-label="Open favorites"
+            role="button"
+          >
             ★ Favorites
           </a>
-          <button className="icon-btn" onClick={onSignOut} aria-label="Sign out" title="Sign out">
+          <button
+            className="icon-btn focus-ring"
+            onClick={onSignOut}
+            aria-label="Sign out"
+            title="Sign out"
+          >
             🚪
           </button>
           <a
-            className="icon-btn"
+            className="icon-btn focus-ring"
             href="https://reactjs.org"
             target="_blank"
             rel="noreferrer"

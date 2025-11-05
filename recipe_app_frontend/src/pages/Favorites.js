@@ -40,14 +40,14 @@ export default function FavoritesPage() {
 
       {/* Empty state */}
       {!favorites.length && (
-        <div className="empty" role="status">
+        <div className="empty" role="status" aria-live="polite">
           You haven't added any favorite recipes yet.
         </div>
       )}
 
       {/* Grid of favorites */}
       {!!favorites.length && (
-        <div className="grid" role="list">
+        <div className="grid" role="list" aria-label="Favorite recipes">
           {favorites.map((r) => (
             <div key={r.id} className="col-4 lg-col-4 sm-col-4" role="listitem">
               <article className="card" aria-label={`Favorite recipe: ${r.title}`}>
@@ -62,9 +62,9 @@ export default function FavoritesPage() {
                 </div>
                 <div className="card-body">
                   <div className="card-title" title={r.title}>{r.title}</div>
-                  <div className="card-meta">
-                    <span className="badge">⏱ {r.readyInMinutes ?? 30}m</span>
-                    <span className="badge">🍽 {r.servings ?? 2}</span>
+                  <div className="card-meta" aria-label="Recipe metadata">
+                    <span className="badge" aria-label={`Ready in ${r.readyInMinutes ?? 30} minutes`}>⏱ {r.readyInMinutes ?? 30}m</span>
+                    <span className="badge" aria-label={`Serves ${r.servings ?? 2}`}>🍽 {r.servings ?? 2}</span>
                   </div>
                   <div className="card-actions">
                     <button

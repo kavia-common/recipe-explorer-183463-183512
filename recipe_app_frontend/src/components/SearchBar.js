@@ -11,7 +11,12 @@ export default function SearchBar({ onSearch, defaultValue = '' }) {
   };
 
   return (
-    <form className="searchbar" onSubmit={submit} role="search" aria-label="Recipe search">
+    <form
+      className="searchbar"
+      onSubmit={submit}
+      role="search"
+      aria-label="Recipe search"
+    >
       <input
         type="search"
         placeholder="Search recipes (e.g., pasta, salad, chicken)..."
@@ -19,8 +24,15 @@ export default function SearchBar({ onSearch, defaultValue = '' }) {
         onChange={(e) => setValue(e.target.value)}
         aria-label="Search recipes"
         className="focus-ring"
+        role="searchbox"
       />
-      <button className="btn btn-primary search-btn" type="submit">Search</button>
+      <button
+        className="btn btn-primary search-btn"
+        type="submit"
+        aria-label="Run recipe search"
+      >
+        Search
+      </button>
     </form>
   );
 }

@@ -368,3 +368,13 @@ hr.divider {
   outline: none;
   box-shadow: var(--focus-ring);
 }
+
+/* Loading spinner utility for status rows */
+.spinner {
+  display: inline-block;
+  animation: spinner-rotate 0.9s linear infinite;
+}
+@keyframes spinner-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

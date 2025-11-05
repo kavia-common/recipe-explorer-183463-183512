@@ -111,7 +111,11 @@ function HomeApp() {
           <FavoritesPage />
         ) : (
           <>
-            {loading && <div className="empty">Loading recipes...</div>}
+            {loading && (
+              <div className="empty" role="status" aria-live="polite" aria-busy="true">
+                <span className="spinner" aria-hidden="true">⏳</span> Loading recipes...
+              </div>
+            )}
             {!loading && (
               <RecipeGrid
                 recipes={recipes}
