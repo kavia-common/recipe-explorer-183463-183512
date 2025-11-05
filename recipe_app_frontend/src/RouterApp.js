@@ -11,9 +11,14 @@ import SignIn from './pages/SignIn';
 
 // Lightweight router without extra dependencies
 function useHashRoute() {
-  const [path, setPath] = useState(() => window.location.hash.replace(/^#/, '') || '/');
+  // Normalize to always have a leading "/" in our hash path
+  const normalize = () => {
+    const raw = window.location.hash.replace(/^#/, '') || '/';
+    return raw.startsWith('/') ? raw : `/${raw}`;
+  };
+  const [path, setPath] = useState(normalize);
   React.useEffect(() => {
-    const onHashChange = () => setPath(window.location.hash.replace(/^#/, '') || '/');
+    const onHashChange = () => setPath(normalize());
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
@@ -60,15 +65,26 @@ function HomeApp() {
 
 // PUBLIC_INTERFACE
 export default function RouterApp() {
-  /** Minimal hash-based router with / and /signin routes without adding dependencies. */
+  /**
+   * Minimal hash-based router with three routes:
+   * - '/' and '/signin' render the pixel-perfect Figma Sign In screen
+   * - '/home' renders the original recipe explorer
+   * This keeps Sign In as default landing while preserving access to Home.
+   */
   const [route] = useHashRoute();
 
-  if (route === '/signin') {
+  if (route === '/' || route === '/signin') {
     return <SignIn />;
   }
-  return (
-    <FavoritesProvider>
-      <HomeApp />
-    </FavoritesProvider>
-  );
+
+  if (route === '/home') {
+    return (
+      <FavoritesProvider>
+        <HomeApp />
+      </FavoritesProvider>
+    );
+  }
+
+  // Fallback: redirect unknown paths to Sign In
+  return <SignIn />;
 }

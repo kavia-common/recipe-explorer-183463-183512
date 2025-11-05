@@ -1,13 +1,18 @@
 # Sign In Pixel-Perfect Preview
 
-- Route: Use hash route /signin
-  - Example: http://localhost:3000/#/signin
+- Default Route: `/` (landing view renders Sign In)
+- Also available: Hash route `#/signin`
+  - Examples:
+    - http://localhost:3000/#/
+    - http://localhost:3000/#/signin
+- Original app preserved at: `#/home`
 - Container size: 375x812 (centered on page)
 - Fonts: Poppins and SF Pro Display loaded with `font-display: swap`
 - Assets: Referenced via `/assets/figmaimages/*.png` paths (environment-safe)
 - Styles: Original CSS preserved (`/assets/common.css`, `/assets/sign-in-11-235.css`)
-- Isolation: Added `src/pages/signin.common.css` to center container and avoid global overrides
+- Isolation: Added `src/pages/signin.common.css` to center container, set isolation boundary, prevent global overrides
 
 Notes:
-- No visual measurements were altered.
-- If you later add navigation, link to `#/signin` from any component to open the preview.
+- Exact measurements and positions are preserved from the extracted spec.
+- If you later add navigation, link to `#/signin` or `#/` from any component to open the Sign In.
+- To access the recipe explorer, navigate to `#/home`.

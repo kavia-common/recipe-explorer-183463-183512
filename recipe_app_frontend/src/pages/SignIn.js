@@ -34,7 +34,12 @@ export default function SignIn() {
   }, []);
 
   return (
-    <div className="signin-preview-root" role="region" aria-label="Sign In Preview Root">
+    <div
+      className="signin-preview-root"
+      role="region"
+      aria-label="Sign In Preview Root"
+      style={{ '--font-family': "Poppins, 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" }}
+    >
       <div className="screen sign-in-11-235" role="application" aria-label="Sign In Screen">
         {/* Status Bar */}
         <div className="status-bar" aria-hidden="true">

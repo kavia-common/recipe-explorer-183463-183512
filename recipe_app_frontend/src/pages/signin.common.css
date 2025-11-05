@@ -20,17 +20,35 @@
   place-items: center;
   background: #f3f4f6;
   padding: 16px;
+  /* Isolation boundary to prevent global styles leaking in */
+  isolation: isolate;
 }
 
 /* Prevent global app theme.css from affecting the pixel screen; lock sizing context */
+.signin-preview-root, 
 .signin-preview-root * {
-  box-sizing: content-box; /* Ensure we don't override the asset css expectations */
+  box-sizing: content-box; /* Preserve asset CSS expectations for absolute layout */
+  font-family: 'Poppins', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* Limit only to the preview root resetting margins for neat centering */
 .signin-preview-root body,
 .signin-preview-root .screen.sign-in-11-235 {
   margin: 0;
+}
+
+/* Explicit font mapping for key elements to match design */
+.signin-preview-root .title { 
+  font-family: 'Poppins', sans-serif; 
+}
+.signin-preview-root .subtitle,
+.signin-preview-root .input,
+.signin-preview-root .input-label,
+.signin-preview-root .divider-text,
+.signin-preview-root .signup-text,
+.signin-preview-root .signup-link,
+.signin-preview-root .btn-social .social-label {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* No additional visual changes applied to preserve exact measurements */
