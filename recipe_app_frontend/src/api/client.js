@@ -3,6 +3,10 @@
  * and deterministic mock fallback when API base is missing or network/5xx errors occur.
  *
  * Priority: REACT_APP_API_BASE -> REACT_APP_BACKEND_URL -> mock mode.
+ *
+ * Note: During development/tests, MSW-based mocks can be enabled (see src/mocks/* and setupTests.js)
+ * to intercept fetch and return deterministic responses. This client will still gracefully
+ * fallback to internal mock data if API is unreachable or base is unset.
  */
 const API_BASE =
   (process.env.REACT_APP_API_BASE && String(process.env.REACT_APP_API_BASE).trim()) ||
