@@ -18,6 +18,11 @@ export default function SearchBar({ onSearch, defaultValue = '', debounceMs = DE
     return d;
   }, [onSearch, debounceMs]);
 
+  // Keep input value in sync if parent changes defaultValue due to URL query updates
+  React.useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
+
   const submit = (e) => {
     e.preventDefault();
     // On submit, call immediately with current value

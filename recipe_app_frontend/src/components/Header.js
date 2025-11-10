@@ -25,7 +25,7 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
   };
 
   return (
-    <header className="header">
+    <header className="header" role="banner" aria-label="Application header">
       <div className="header-inner">
         <button
           type="button"
@@ -33,7 +33,7 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
           aria-label="Recipe Explorer Home"
           onClick={goHome}
         >
-          <div className="brand-icon">Rx</div>
+          <div className="brand-icon" aria-hidden="true">Rx</div>
           <div className="brand-text">Recipe Explorer</div>
         </button>
         {children}
@@ -45,7 +45,7 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
               e.preventDefault();
               openFav();
             }}
-            aria-label="Open favorites"
+            aria-label={`Open favorites${typeof favoritesCount === 'number' ? ` (${favoritesCount})` : ''}`}
             role="button"
           >
             ★ Favorites{typeof favoritesCount === 'number' ? ` (${favoritesCount})` : ''}

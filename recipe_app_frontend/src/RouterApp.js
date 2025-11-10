@@ -145,7 +145,7 @@ function HomeApp() {
         />
       </Header>
 
-      <main className="content" role="main" aria-live="polite">
+      <main className="content" role="main" aria-live="polite" aria-label="Browse and search recipes">
         {route.name === 'favorites' ? (
           <FavoritesPage />
         ) : (

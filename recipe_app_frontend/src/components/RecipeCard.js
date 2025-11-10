@@ -37,6 +37,7 @@ function RecipeCardBase({ recipe, onOpen }) {
       onKeyDown={onKeyActivate}
       role="listitem"
       aria-label={`Recipe card: ${recipe.title}`}
+      data-testid="recipe-card"
       tabIndex={0}
     >
       <div className="card-image">
