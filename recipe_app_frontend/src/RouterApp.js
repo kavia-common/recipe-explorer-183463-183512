@@ -1,5 +1,4 @@
-import React from 'react';
-import { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import RecipeGrid from './components/RecipeGrid';
@@ -12,22 +11,24 @@ import FavoritesPage from './pages/Favorites';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 /**
- * Simple hash router helpers
+ * Simple hash router helpers with query param support
  */
 
 // PUBLIC_INTERFACE
 export function parseHash(hash = window.location.hash) {
-  /** Parse window.location.hash into a pathname and params (supports /recipe/:id). */
+  /** Parse window.location.hash into a pathname, search params and params (supports /recipe/:id). */
   const raw = (hash || '').replace(/^#/, '') || '/';
-  const pathname = raw.startsWith('/') ? raw : `/${raw}`;
+  const url = new URL(raw.startsWith('/') ? raw : `/${raw}`, 'http://local'); // base for parsing
+  const pathname = url.pathname;
 
   // routes:
-  // /, /signin, /home, /favorites, /recipe/:id
+  // / (signin), /signin, /home, /favorites, /search, /recipe/:id
   const parts = pathname.split('/').filter(Boolean);
   const route = {
     pathname,
     name: 'unknown',
-    params: {}
+    params: {},
+    query: Object.fromEntries(url.searchParams.entries()),
   };
 
   if (pathname === '/' || pathname === '/signin') {
@@ -36,6 +37,8 @@ export function parseHash(hash = window.location.hash) {
     route.name = 'home';
   } else if (pathname === '/favorites') {
     route.name = 'favorites';
+  } else if (pathname === '/search') {
+    route.name = 'search';
   } else if (parts[0] === 'recipe' && parts[1]) {
     route.name = 'recipe';
     route.params.id = decodeURIComponent(parts[1]);
@@ -46,7 +49,7 @@ export function parseHash(hash = window.location.hash) {
 
 // PUBLIC_INTERFACE
 export function navigate(path, { replace = false } = {}) {
-  /** Programmatic navigation using location.hash, enabling deep-link/back support. */
+  /** Programmatic navigation using location.hash, enabling deep-link/back support. Accepts path with optional ?query. */
   const normalized = path.startsWith('#') ? path : `#${path.startsWith('/') ? path : `/${path}`}`;
   if (replace) {
     const newUrl = `${window.location.pathname}${normalized}`;
@@ -60,7 +63,7 @@ export function navigate(path, { replace = false } = {}) {
 function useHashRoute() {
   const normalize = () => parseHash(window.location.hash);
   const [route, setRoute] = useState(normalize);
-  React.useEffect(() => {
+  useEffect(() => {
     const onHashChange = () => setRoute(normalize());
     window.addEventListener('hashchange', onHashChange);
     // ensure default landing has a hash for SPA routing
@@ -72,13 +75,42 @@ function useHashRoute() {
   return route;
 }
 
-function HomeApp() {
-  const { query, setQuery, recipes, loading, search } = useRecipes('');
+function useUrlSyncedQuery(currentQuery, setQuery, search) {
+  // Sync query to URL for /search route and read from it when route changes.
   const route = useHashRoute();
 
-  // open states are derived from route
-  const selectedId = route.name === 'recipe' ? route.params.id : null;
-  const favoritesOpen = route.name === 'favorites';
+  // Initialize from URL on first mount of search route
+  useEffect(() => {
+    if (route.name === 'search') {
+      const q = String(route.query?.q || '').trim();
+      if (q && q !== currentQuery) {
+        setQuery(q);
+        search(q, { immediate: true });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [route.name]);
+
+  // When user searches, update the URL if on /search; otherwise keep /home but still allow search
+  const onSearchAndSync = (q, { immediate = true } = {}) => {
+    const query = String(q || '').trim();
+    if (route.name === 'search') {
+      const enc = encodeURIComponent(query);
+      navigate(`/search${query ? `?q=${enc}` : ''}`);
+    }
+    return search(query, { immediate });
+  };
+
+  return { onSearchAndSync, route };
+}
+
+function HomeApp() {
+  const { query, setQuery, recipes, loading, search } = useRecipes('');
+  const baseRoute = useHashRoute();
+
+  // Modal and drawer routes are derived from route
+  const selectedId = baseRoute.name === 'recipe' ? baseRoute.params.id : null;
+  const favoritesOpen = baseRoute.name === 'favorites';
 
   const actions = useMemo(
     () => ({
@@ -86,10 +118,16 @@ function HomeApp() {
       closeFavorites: () => navigate('/home'),
       openDetail: (r) => navigate(`/recipe/${encodeURIComponent(r?.id)}`),
       closeDetail: () => navigate('/home'),
-      goHome: () => navigate('/home')
+      goHome: () => navigate('/home'),
+      goSearch: () => navigate('/search'),
     }),
     []
   );
+
+  // URL query synchronization scaffolding for /search
+  const { onSearchAndSync, route } = useUrlSyncedQuery(query, setQuery, search);
+
+  const isSearchPage = route.name === 'search';
 
   return (
     <div className="app-shell">
@@ -101,8 +139,8 @@ function HomeApp() {
           defaultValue={query}
           onSearch={(q) => {
             setQuery(q);
-            // Submit invokes immediate search; typing is debounced inside SearchBar
-            search(q, { immediate: true });
+            onSearchAndSync(q, { immediate: true });
+            if (!isSearchPage) actions.goSearch();
           }}
         />
       </Header>
@@ -159,7 +197,8 @@ function GuardedRoutes() {
     return null;
   }
 
-  if (route.name === 'home' || route.name === 'favorites' || route.name === 'recipe') {
+  // Allowed app routes
+  if (route.name === 'home' || route.name === 'favorites' || route.name === 'recipe' || route.name === 'search') {
     return (
       <FavoritesProvider>
         <HomeApp />
@@ -176,8 +215,11 @@ function GuardedRoutes() {
 export default function RouterApp() {
   /**
    * Hash-based router with authentication guard.
-   * - '/signin' and '/' render the Sign In when not authenticated
-   * - Authenticated users can access '/home', '/recipe/:id', '/favorites'
+   * Routes:
+   * - '/' and '/signin' render the Sign In when not authenticated
+   * - Authenticated users can access '/home', '/search', '/recipe/:id', '/favorites'
+   * Modal: '/recipe/:id' opens RecipeDetail as modal panel.
+   * URL query sync: '/search?q=term' keeps search term in the URL and syncs to state.
    */
   return (
     <AuthProvider>
