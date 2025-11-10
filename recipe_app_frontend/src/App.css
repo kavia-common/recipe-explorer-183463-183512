@@ -1,2 +1,14 @@
 /* Intentionally minimal: theming and components are defined in src/theme.css */
-:root {}
+/* Ocean Professional root variables are set in theme.css. Keep this for targeted app overrides if needed. */
+:root {
+  /* These defer to theme.css variables to avoid duplication; defined for clarity/override hooks. */
+  --primary: var(--primary);
+  --secondary: var(--secondary);
+  --success: var(--success);
+  --error: var(--error);
+  --bg: var(--bg);
+  --surface: var(--surface);
+  --text: var(--text);
+}
+
+/* No additional styles here to avoid conflicts. Use .surface, .btn, .grid, etc. from theme.css */

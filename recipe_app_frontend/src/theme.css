@@ -8,16 +8,33 @@
   --surface: #ffffff;    /* cards, panels */
   --text: #111827;       /* slate-900-ish */
 
+  /* Add neutrals for subtle borders/text */
+  --muted: #6b7280;
+  --muted-2: #9ca3af;
+  --border: rgba(17,24,39,0.08);
+
   /* Shadows and radii */
+  --shadow-xs: 0 1px 1px rgba(17, 24, 39, 0.04);
   --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.06);
   --shadow: 0 10px 15px -3px rgba(17,24,39,0.1), 0 4px 6px -2px rgba(17,24,39,0.05);
 
   --radius: 12px;
   --radius-sm: 10px;
   --radius-xs: 8px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
 
   /* Focus ring */
   --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.35);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* Gradient tokens (utility) */
+  --gradient-from: rgba(37,99,235,0.10); /* from-blue-500/10 */
+  --gradient-to: #f9fafb;                /* to-gray-50 */
 }
 
 /* Base reset (keep minimal to avoid sign-in overrides) */
@@ -35,15 +52,29 @@ a { color: inherit; text-decoration: none; }
 /* Surface container */
 .surface {
   background: var(--surface);
-  border: 1px solid rgba(17,24,39,0.08);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
 }
+.shadow-xs { box-shadow: var(--shadow-xs); }
 .shadow-sm { box-shadow: var(--shadow-sm); }
 .shadow { box-shadow: var(--shadow); }
 .rounded { border-radius: var(--radius); }
 .rounded-sm { border-radius: var(--radius-sm); }
 .rounded-xs { border-radius: var(--radius-xs); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* Gradient utility (optional) */
+.gradient-soft {
+  background: linear-gradient(180deg, var(--gradient-from), var(--gradient-to));
+}
+/* A utility to apply gradient to borders visually (via background) */
+.border-gradient {
+  background-image: linear-gradient(180deg, var(--gradient-from), var(--gradient-to));
+  border: 1px solid var(--border);
+}
+
 .focus-ring:focus {
   outline: none;
   box-shadow: var(--focus-ring);
@@ -100,7 +131,7 @@ a { color: inherit; text-decoration: none; }
   border-radius: 10px;
   cursor: pointer;
   color: #374151;
-  transition: background .2s ease, transform .15s ease, color .2s ease;
+  transition: background var(--transition-fast), transform var(--transition-fast), color var(--transition);
 }
 .icon-btn:hover { background: rgba(17,24,39,0.06); color: var(--primary); transform: translateY(-1px); }
 .icon-btn:focus-visible { box-shadow: var(--focus-ring); }
@@ -171,11 +202,13 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   gap: 8px;
   background: var(--surface);
-  border: 1px solid rgba(17,24,39,0.08);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 8px 10px;
   box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition);
 }
+.searchbar:hover { border-color: rgba(37,99,235,0.25); }
 .searchbar input {
   flex: 1;
   border: 0;
@@ -225,11 +258,11 @@ a { color: inherit; text-decoration: none; }
 /* Cards */
 .card {
   background: var(--surface);
-  border: 1px solid rgba(17,24,39,0.08);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background-color var(--transition);
 }
 .card:hover {
   transform: translateY(-2px);
@@ -325,7 +358,7 @@ a { color: inherit; text-decoration: none; }
   top: 0; right: 0; bottom: 0;
   width: min(420px, 100%);
   background: var(--surface);
-  border-left: 1px solid rgba(17,24,39,0.08);
+  border-left: 1px solid var(--border);
   box-shadow: -20px 0 40px rgba(17,24,39,0.15);
   z-index: 60;
   display: grid;
@@ -335,7 +368,7 @@ a { color: inherit; text-decoration: none; }
   padding: 14px 16px;
   font-weight: 800;
   background: linear-gradient(180deg, rgba(37,99,235,0.05), rgba(255,255,255,1));
-  border-bottom: 1px solid rgba(17,24,39,0.08);
+  border-bottom: 1px solid var(--border);
 }
 .fav-body {
   padding: 12px 14px 18px;
@@ -346,7 +379,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Divider */
 hr.divider {
-  height: 1px; border: 0; background: rgba(17,24,39,0.08);
+  height: 1px; border: 0; background: var(--border);
   margin: 8px 0;
 }
 
@@ -363,7 +396,7 @@ hr.divider {
 /* Utility chips */
 .chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .chip {
-  border: 1px solid rgba(17,24,39,0.08);
+  border: 1px solid var(--border);
   background: #fff;
   color: #374151;
   border-radius: 999px;
