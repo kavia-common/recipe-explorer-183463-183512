@@ -4,14 +4,16 @@ import { navigate } from '../RouterApp';
 
 // PUBLIC_INTERFACE
 export default function FavoritesPage() {
-  /** Full-page Favorites view rendering saved recipes in a responsive grid with remove and open actions. */
-  const { favorites, removeFavorite } = useFavorites();
+  /** Full-page Favorites view rendering saved recipes in a responsive grid with remove, clear-all, and open actions. */
+  const { favorites, removeFavorite, clearFavorites, favoritesCount } = useFavorites();
 
   const openRecipe = (r) => {
     navigate(`/recipe/${encodeURIComponent(r.id)}`);
   };
 
   const goBack = () => navigate('/home');
+
+  const hasFavorites = Array.isArray(favorites) && favorites.length > 0;
 
   return (
     <div className="content" aria-label="Favorites Page">
@@ -31,22 +33,52 @@ export default function FavoritesPage() {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span className="badge" aria-hidden="true">★</span>
-          <h1 style={{ margin: 0, fontSize: 18, letterSpacing: 0.2 }}>Your Favorites</h1>
+          <h1 style={{ margin: 0, fontSize: 18, letterSpacing: 0.2 }}>
+            Your Favorites{typeof favoritesCount === 'number' ? ` (${favoritesCount})` : ''}
+          </h1>
         </div>
-        <button className="btn btn-secondary" onClick={goBack} aria-label="Back to Browse">
-          Back to Browse
-        </button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          {hasFavorites && (
+            <button
+              className="icon-btn danger focus-ring"
+              onClick={clearFavorites}
+              title="Clear all favorites"
+              aria-label="Clear all favorites"
+            >
+              Clear All
+            </button>
+          )}
+          <button className="btn btn-secondary" onClick={goBack} aria-label="Back to Browse">
+            Back to Browse
+          </button>
+        </div>
       </div>
 
       {/* Empty state */}
-      {!favorites.length && (
-        <div className="empty" role="status" aria-live="polite">
-          You haven't added any favorite recipes yet.
+      {!hasFavorites && (
+        <div
+          className="empty"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          aria-label="No favorites yet"
+        >
+          <div style={{ fontWeight: 700, marginBottom: 6 }}>No favorites yet</div>
+          <div style={{ marginBottom: 10 }}>
+            Save recipes you love and they will appear here.
+          </div>
+          <button
+            className="btn btn-primary focus-ring"
+            onClick={goBack}
+            aria-label="Browse recipes to add favorites"
+          >
+            Browse Recipes
+          </button>
         </div>
       )}
 
       {/* Grid of favorites */}
-      {!!favorites.length && (
+      {hasFavorites && (
         <div className="grid" role="list" aria-label="Favorite recipes">
           {favorites.map((r) => (
             <div key={r.id} className="col-4 lg-col-4 sm-col-4" role="listitem">
