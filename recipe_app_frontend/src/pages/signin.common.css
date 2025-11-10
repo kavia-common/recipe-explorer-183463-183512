@@ -13,17 +13,16 @@
   font-display: swap;
 }
 
-/* Center the 375x812 container on the page without affecting global app styles */
+/* Center sign-in container on page and provide Ocean Professional tokens */
 .signin-preview-root {
   min-height: 100vh;
   display: grid;
   place-items: center;
   background: #f3f4f6;
   padding: 16px;
-  /* Isolation boundary to prevent global styles leaking in */
-  isolation: isolate;
+  isolation: isolate; /* prevent global overrides */
 
-  /* Ocean Professional token overrides inside preview only */
+  /* Ocean Professional tokens (scoped) */
   --text-primary: #111827;
   --text-secondary: #6b7280;
   --accent: #2563EB;
