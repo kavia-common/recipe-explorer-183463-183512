@@ -1,11 +1,13 @@
 import React from 'react';
 import { navigate } from '../RouterApp';
 import { useAuth } from '../context/AuthContext';
+import { useFavorites } from '../context/FavoritesContext';
 
 // PUBLIC_INTERFACE
 export default function Header({ onOpenFavorites, onNavigateHome, children }) {
   /** App header with brand and action buttons. */
   const { signOut } = useAuth();
+  const { favoritesCount } = useFavorites();
 
   const goHome = () => {
     if (onNavigateHome) onNavigateHome();
@@ -39,11 +41,14 @@ export default function Header({ onOpenFavorites, onNavigateHome, children }) {
           <a
             className="btn btn-secondary focus-ring"
             href="#/favorites"
-            onClick={(e) => { e.preventDefault(); openFav(); }}
+            onClick={(e) => {
+              e.preventDefault();
+              openFav();
+            }}
             aria-label="Open favorites"
             role="button"
           >
-            ★ Favorites
+            ★ Favorites{typeof favoritesCount === 'number' ? ` (${favoritesCount})` : ''}
           </a>
           <button
             type="button"
